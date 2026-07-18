@@ -65,6 +65,7 @@ from google import genai
 
 
 load_dotenv()
+# Change this value to switch Gemini models.
 MODEL_NAME = "models/gemini-3.5-flash"
 
 def get_api_key():
@@ -91,6 +92,11 @@ def generate_response(prompt, retries=3):
                 contents=prompt,
             )
 
+            if not response.text:
+                raise RuntimeError(
+                    "Gemini returned an empty response."
+                )
+
             return response.text
 
         except Exception as error:
@@ -99,4 +105,6 @@ def generate_response(prompt, retries=3):
             if attempt < retries - 1:
                 time.sleep(2)
 
-    return None
+    raise RuntimeError(
+        "Failed to generate a response from Gemini."
+    )
