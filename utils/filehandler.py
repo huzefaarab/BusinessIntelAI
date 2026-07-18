@@ -59,6 +59,8 @@ def create_business_folders(business_name):
         "strategy",
         "plan",
         "content",
+        "content/posts",
+        "content/videos",    
         "reviews",
         "logs",
     ]

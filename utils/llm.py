@@ -56,39 +56,85 @@ models/gemini-3.1-flash-live-preview
 models/gemini-3.5-live-translate-preview
 """
 
+"""
+models/gemini-3.5-flash
+-> Text generation.
 
+Pollination Ai
+-> Image generation.
+"""
 import os
 import time
+import requests
+
+from urllib.parse import quote
 
 from dotenv import load_dotenv
 from google import genai
 
+import wave
+
+from piper import (
+    PiperVoice,
+)
 
 load_dotenv()
-# Change this value to switch Gemini models.
-MODEL_NAME = "models/gemini-3.5-flash"
+
+
+TEXT_MODEL = "models/gemini-3.5-flash"
+
+VOICE_MODEL = (
+    "models/"
+    "en_US-lessac-medium.onnx"
+)
+
+
+# IMAGE GENERATION
+# ----------------
+# Currently uses Pollinations AI.
+# Can be switched to Gemini or any other
+# image generation model in the future.
+
 
 def get_api_key():
+    """
+    Loads the Gemini API key.
+    """
+
     api_key = os.getenv("GEMINI_API_KEY")
 
     if not api_key:
-        raise ValueError("GEMINI_API_KEY was not found in the .env file.")
+        raise ValueError(
+            "GEMINI_API_KEY was not found in the .env file."
+        )
 
     return api_key
 
 
 def initialize_client():
+    """
+    Initializes the Gemini client.
+    """
+
     api_key = get_api_key()
-    return genai.Client(api_key=api_key)
+
+    return genai.Client(
+        api_key=api_key,
+    )
 
 
 def generate_response(prompt, retries=3):
+    """
+    Generates text responses using Gemini.
+    """
+
     client = initialize_client()
 
     for attempt in range(retries):
+
         try:
             response = client.models.generate_content(
-                model=MODEL_NAME,
+                model=TEXT_MODEL,
                 contents=prompt,
             )
 
@@ -100,11 +146,117 @@ def generate_response(prompt, retries=3):
             return response.text
 
         except Exception as error:
-            print(f"Attempt {attempt + 1} failed: {error}")
+
+            print(
+                f"[TEXT] Attempt {attempt + 1} failed : {error}"
+            )
 
             if attempt < retries - 1:
                 time.sleep(2)
 
     raise RuntimeError(
-        "Failed to generate a response from Gemini."
+        "Failed to generate a text response from Gemini."
     )
+
+
+def generate_image(
+    prompt,
+    output_path,
+    retries=3,
+):
+    """
+    Generates images using Pollinations AI.
+    """
+
+    for attempt in range(retries):
+
+        try:
+
+            image_url = (
+                "https://image.pollinations.ai/prompt/"
+                + quote(prompt)
+            )
+
+            print(
+                image_url,
+            )
+
+            response = requests.get(
+                image_url,
+                timeout=120,
+            )
+
+            if response.status_code != 200:
+
+                print(
+                    f"Status Code : {response.status_code}"
+                )
+
+                print(
+                    response.text,
+                )
+
+                raise RuntimeError(
+                    "Failed to generate the image."
+                )
+
+            with open(
+                output_path,
+                "wb",
+            ) as image_file:
+
+                image_file.write(
+                    response.content
+                )
+
+            return output_path
+
+        except Exception as error:
+
+            print(
+                f"[IMAGE] Attempt {attempt + 1} failed : {error}"
+            )
+
+            if attempt < retries - 1:
+                time.sleep(2)
+
+    raise RuntimeError(
+        "Failed to generate an image."
+    )
+
+def generate_voiceover(
+    script,
+    output_path,
+):
+    """
+    Generates a voiceover using Piper.
+    """
+
+    try:
+
+        voice = PiperVoice.load(
+            VOICE_MODEL,
+        )
+
+        with wave.open(
+
+            str(output_path),
+            "wb",
+
+        ) as audio_file:
+
+            voice.synthesize_wav(
+
+                script,
+                audio_file,
+
+            )
+
+        return output_path
+
+
+    except Exception as error:
+
+        raise RuntimeError(
+            "Failed to generate the voiceover."
+        ) from error

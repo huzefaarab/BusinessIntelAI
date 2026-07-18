@@ -1,45 +1,38 @@
 {
-    "content_pillars": [
-        "Artisanal Craftsmanship & Behind-the-Scenes (The sourdough process, pastry lamination, raw premium ingredients)",
-        "Community & Experience (Weekend workshops, customer stories, college campus connection)",
-        "Visual Indulgence (Aesthetic close-ups of best-sellers like the Red Velvet Cheesecake and Chocolate Croissants)",
-        "Convenience & Services (Promoting same-day delivery in Pune, custom cake consultations, and corporate gifting)"
-    ],
+    "week_objective": "Establish strong brand awareness and build immediate trust within the Pune community by showcasing signature artisanal bestsellers and leveraging established social proof.",
     "target_audience": [
-        "College Students (Looking for aesthetic, affordable treats, study snacks, and hangouts)",
-        "Working Professionals (Targeted for corporate gifting, premium weekend workshops, and convenient deliveries)",
-        "Local Pune Families (In need of high-quality custom celebration cakes and weekend family treats)",
-        "Premium Food Connoisseurs (Individuals prioritizing artisanal quality, fresh ingredients, and fine baking over budget)"
+        "College students nearby seeking aesthetic and affordable daily treats",
+        "Working professionals in Pune looking for premium baked goods and convenient snacks",
+        "Local families searching for high-quality weekend treats and custom celebratory cakes"
     ],
-    "brand_voice": [
-        "Warm and Welcoming",
-        "Aesthetic and Visually Sophisticated",
-        "Community-Oriented and Approachable",
-        "Passionate and Expert (Artisanal Authority)"
+    "content_pillars": [
+        "The Artisanal Craft (Highlighting premium ingredients and baking processes of signature items like Garlic Sourdough and Chocolate Croissants)",
+        "Trust & Local Heritage (Celebrating 3+ years of serving Pune since 2020, backed by 500+ positive customer reviews)",
+        "Signature Indulges (Spotlighting bestsellers such as the Red Velvet Cheesecake and custom celebration cakes)",
+        "Convenience & Access (Promoting Pune-wide same-day delivery for spontaneous cravings and last-minute celebrations)"
     ],
-    "posting_goals": [
-        "Increase footfall from the nearby college campus through highly shareable, aesthetic content",
-        "Drive consistent bookings for the weekend bakery workshops",
-        "Position the brand as Pune's go-to premium choice for custom birthday and celebration cakes",
-        "Boost order volume for same-day delivery services and seasonal corporate gifting boxes",
-        "Build long-term trust by highlighting the brand's premium ingredients and legacy since 2020"
+    "key_messages": [
+        "Ken's Bakery has been crafting premium, fresh artisanal experiences for Pune since 2020.",
+        "From flaky Chocolate Croissants to signature Red Velvet Cheesecakes, we bake joy into every single bite.",
+        "Enjoy the convenience of premium artisanal baking delivered right to your doorstep with our same-day Pune delivery."
     ],
-    "marketing_opportunities": [
-        "Festive Corporate Campaigns: Capitalizing on Diwali and Christmas by heavily promoting seasonal bakery boxes",
-        "College-centric Micro-campaigns: Special offers for exam weeks, graduation seasons, and back-to-college periods",
-        "Local Cafe Cross-Promotions: Collaborating with partner cafes to run co-branded social media giveaways and pop-ups",
-        "Review-driven Social Proof: Transforming the 500+ online reviews into highly-engaging social media trust signals"
+    "tone": [
+        "Warm",
+        "Welcoming",
+        "Premium",
+        "Appetizing",
+        "Authentic"
     ],
-    "recommended_content_directions": [
-        "Baking ASMR & Process Reels: High-definition short-form videos capturing the satisfying crunch of croissants and slicing of Garlic Sourdough Bread",
-        "Before & After Custom Cake Reels: Highlighting the journey from a client's concept/sketch to the finalized premium celebration cake",
-        "Workshop Diaries: Authentic, emotional recap videos of weekend workshop attendees laughing, learning, and tasting their creations",
-        "Interactive Student Stories: Weekly polls and Q&As tailored to college life, such as 'Choose your study fuel: Croissant or Cookie?'",
-        "Gift Box Unboxing: Highly aesthetic, sensory-focused unboxing videos of the upcoming seasonal Diwali/Christmas boxes to showcase premium packaging"
+    "calls_to_action": [
+        "Order now for same-day delivery across Pune!",
+        "Send us a DM to design your dream custom cake today.",
+        "Visit us near the campus and grab a fresh batch of sourdough!"
     ],
-    "additional_recommendations": [
-        "Develop a student-friendly mini-menu or loyalty program to keep premium items accessible to the neighboring college audience",
-        "Optimize local SEO and Google My Business utilizing the 500+ reviews to capture 'best sourdough' and 'custom cakes Pune' search queries",
-        "Create a streamlined, automated WhatsApp catalog for the same-day delivery service to reduce ordering friction"
-    ]
+    "format_mix": [
+        "40% Short-form Video (Instagram Reels showcasing satisfying baking processes and texture close-ups)",
+        "30% Carousel Posts (Spotlighting signature products alongside verified customer reviews as social proof)",
+        "20% Interactive Stories (Daily freshly-baked status, behind-the-scenes polls, and direct ordering links)",
+        "10% Static Grid Images (Aesthetic, high-end photography of custom celebratory cakes)"
+    ],
+    "strategy_reasoning": "The first-week strategy focuses on establishing brand credibility and introducing signature bestsellers to the immediate Pune community. By leveraging our established history since 2020 and strong social proof of 500+ positive reviews, we build immediate trust while driving impulse purchases via visual product spotlights and same-day delivery convenience messaging."
 }

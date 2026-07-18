@@ -1,0 +1,72 @@
+[
+    {
+        "day": 1,
+        "type": "Post",
+        "topic": "Introduction to Ken's Bakery: Serving Pune's Premium Pastries Since 2020",
+        "hook": "Pune's best-kept artisanal secret since 2020 is officially on your feed! \ud83e\udd50",
+        "caption_direction": "Introduce Ken's Bakery's warm heritage of crafting fresh, premium artisanal baked goods right here in Pune. Highlight our 3+ year history and the dedication behind our signature items. Warmly invite the community to join our journey and experience why 500+ locals have given us five-star reviews.",
+        "visual_direction": "A high-end carousel. Slide 1: An aesthetic, premium close-up of a freshly baked Red Velvet Cheesecake slice. Slide 2: Warm, golden-brown Chocolate Croissants piled high. Slide 3: Clean, elegant text graphic showcasing glowing snippets of local customer reviews.",
+        "cta": "Order now for same-day delivery across Pune!",
+        "insight": "Establishing historical credibility and direct local social proof on Day 1 builds immediate trust with first-time profile visitors."
+    },
+    {
+        "day": 2,
+        "type": "Video",
+        "topic": "The Satisfying ASMR Baking of Signature Chocolate Croissants",
+        "hook": "Listen to that crunch! \ud83e\udd50 The making of Pune's flakiest Chocolate Croissants.",
+        "caption_direction": "Focus on 'The Artisanal Craft' content pillar. Walk the audience through our slow, premium lamination process using high-quality butter and rich chocolate layers. Keep the tone warm, highly appetizing, and welcoming, appealing to nearby college students and busy professionals alike.",
+        "visual_direction": "Short-form video with high-quality ASMR audio of rolling dough, slicing, wrapping rich dark chocolate, rising in the oven, and a slow-motion tear-apart showing the perfect flaky layers. Warm, natural morning light.",
+        "cta": "Visit us near the campus and grab a fresh batch of sourdough!",
+        "insight": "Highly-visual, sensory-focused ASMR content drives strong early engagement and captures the attention of local college students."
+    },
+    {
+        "day": 3,
+        "type": "Post",
+        "topic": "Spotlight on Artisanal Garlic Sourdough Bread",
+        "hook": "No artificial yeast. No shortcuts. Just pure, slow-fermented Sourdough goodness. \ud83e\udd56",
+        "caption_direction": "Educate our audience on the meticulous, natural fermentation process of our Garlic Sourdough. Showcase it as a premium, healthy daily bread option perfect for local working professionals seeking nutritious convenience, baked fresh every single morning.",
+        "visual_direction": "A carousel post. Slide 1: A gorgeous cross-section of the Garlic Sourdough, showcasing the perfect airy crumb structure. Slide 2: Slices of sourdough being toasted and drizzled with olive oil. Slide 3: A minimalist graphic detailing our 24-hour fermentation process.",
+        "cta": "Visit us near the campus and grab a fresh batch of sourdough!",
+        "insight": "Educating the community about the artisanal baking process builds high perceived value and justifies premium pricing."
+    },
+    {
+        "day": 4,
+        "type": "Post",
+        "topic": "Custom Celebration Cakes for Pune Families",
+        "hook": "Bringing your dream celebrations to life, one artisanal layer at a time. \ud83c\udf82",
+        "caption_direction": "Focus on the 'Signature Indulges' pillar, targeting local families planning weekend treats and milestones. Highlight Ken's Bakery's capability to design stunning custom cakes that taste as amazing as they look, hand-crafted with premium ingredients.",
+        "visual_direction": "A single aesthetic, high-end photograph of a custom multi-tier floral celebration cake placed on a pastel pedestal, shot under soft, warm lighting to emphasize its intricate, elegant details.",
+        "cta": "Send us a DM to design your dream custom cake today.",
+        "insight": "High-quality, aspirational imagery of celebratory custom cakes drives direct message inquiries and custom orders from local families."
+    },
+    {
+        "day": 5,
+        "type": "Post",
+        "topic": "Bestseller Spotlight: The Red Velvet Cheesecake & 500+ Reviews",
+        "hook": "See why 500+ Pune locals have rated this the ultimate Red Velvet Cheesecake. \u2764\ufe0f",
+        "caption_direction": "Combine the 'Signature Indulges' and 'Trust & Local Heritage' pillars. Feature glowing customer testimonials praising the velvety, rich cream cheese layers. Reinforce that Ken's Bakery has been crafting joy in Pune since 2020.",
+        "visual_direction": "A carousel post. Slide 1: A close-up, appetizing slice of Red Velvet Cheesecake showing its creamy texture and bright red crumbs. Slide 2: A beautiful screenshot collage of 5-star Google and Zomato reviews from Pune food lovers.",
+        "cta": "Order now for same-day delivery across Pune!",
+        "insight": "Social proof combined with a visual best-seller directly drives impulse purchases through immediate trust."
+    },
+    {
+        "day": 6,
+        "type": "Video",
+        "topic": "Behind-the-Scenes: A Day in the Life of a Ken's Bakery Baker",
+        "hook": "Ever wondered what it takes to bake Pune\u2019s favorite pastries fresh every morning? \u2600\ufe0f",
+        "caption_direction": "Take the audience behind the scenes to show the hard work, passion, and laughter of our local baking team starting at 4 AM. Highlight the premium ingredients and authentic, hand-made process that defines Ken's Bakery's artisanal craft since 2020.",
+        "visual_direction": "A fast-cut, warm, and highly authentic behind-the-scenes video. Clips of flour dusting, bread shaping, friendly interactions among the baking staff, and pulling piping-hot trays out of the oven. Upbeat, warm acoustic background track.",
+        "cta": "Visit us near the campus and grab a fresh batch of sourdough!",
+        "insight": "Humanizing the brand with behind-the-scenes content fosters an authentic emotional connection and long-term brand loyalty."
+    },
+    {
+        "day": 7,
+        "type": "Post",
+        "topic": "Convenience & Same-Day Pune Delivery Promo",
+        "hook": "Craving artisanal pastries at your desk? We\u2019ll bring the warmth straight to you. \ud83d\udef5",
+        "caption_direction": "Highlight 'Convenience & Access'. Let busy working professionals and students in Pune know they don't have to leave their desk or home to enjoy freshly-baked bliss. Emphasize our seamless same-day delivery service across the city.",
+        "visual_direction": "A clean, bright lifestyle photograph of a signature Ken's Bakery delivery box opened on a modern desk next to a laptop, revealing fresh, warm pastries ready to be enjoyed.",
+        "cta": "Order now for same-day delivery across Pune!",
+        "insight": "Addressing the convenience factor on Sunday evening/Monday prep appeals to working professionals planning their weekly snack options."
+    }
+]

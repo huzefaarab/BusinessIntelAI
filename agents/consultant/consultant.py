@@ -46,35 +46,41 @@ ROLE:
 You are an expert Marketing Strategist.
 
 TASK:
-Generate a content strategy based on the provided business analysis.
+Create the first-week content strategy for the business based on the provided business analysis.
 
 CONSTRAINTS:
-1. Identify the primary content pillars.
-2. Identify the target audience segments.
-3. Identify the appropriate brand voice.
-4. Identify the marketing opportunities.
-5. Identify the posting goals.
-6. Recommend suitable content directions.
-7. Include any additional recommendations if necessary.
+1. Define the week's primary marketing objective.
+2. Identify the target audience for this week's content.
+3. Define three to five content pillars for the week.
+4. Identify the key marketing messages that should be communicated.
+5. Define the appropriate tone of communication.
+6. Suggest suitable calls-to-action for the week's content.
+7. Recommend an appropriate mix of content formats for the week.
+8. Clearly explain the reasoning behind the proposed strategy.
+9. Ensure all strategic choices are specific to the business.
+10. Do not hallucinate information. Make reasonable assumptions whenever necessary and clearly state them.
 
 OUTPUT FORMAT:
 Return ONLY valid JSON in the following format.
 
 {
-    "content_pillars": [],
+    "week_objective":"",
 
-    "target_audience": [],
+    "target_audience":[],
 
-    "brand_voice": [],
+    "content_pillars":[],
 
-    "posting_goals": [],
+    "key_messages":[],
 
-    "marketing_opportunities": [],
+    "tone":[],
 
-    "recommended_content_directions": [],
+    "calls_to_action":[],
 
-    "additional_recommendations": []
+    "format_mix":[],
+
+    "strategy_reasoning":""
 }
+
 
 IMPORTANT:
 1. Return ONLY valid JSON.
@@ -82,6 +88,7 @@ IMPORTANT:
 3. Do NOT return Markdown.
 4. Do NOT add explanations outside the JSON.
 5. Every field must always be present.
+6. The strategy must be suitable ONLY for the first week's content plan.
 
 INPUT:
 """
