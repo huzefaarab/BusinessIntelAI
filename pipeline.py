@@ -12,7 +12,7 @@ from agents.reviewer.reviewer import (
 
 
 SOURCE_FILE_PATH = (
-    "source_files/source_pack.md"
+    "source_files/ken's bakery.md"
 )
 
 
