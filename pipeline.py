@@ -11,12 +11,8 @@ from agents.reviewer.reviewer import (
 )
 
 
-SOURCE_FILE_PATH = (
-    "source_files/ken's bakery.md"
-)
 
-
-def run_pipeline():
+def run_pipeline(source_file_path):
     """
     Runs the complete BusinessIntelAI
     pipeline.
@@ -29,7 +25,7 @@ def run_pipeline():
     business_name = (
 
         run_consultant_pipeline(
-            SOURCE_FILE_PATH,
+            source_file_path,
         )
 
     )
