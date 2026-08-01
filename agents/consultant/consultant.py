@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+import traceback
 from utils.llm import generate_response
 
 from utils.logger import (
@@ -43,10 +44,15 @@ def generate_analysis(source_pack):
 
         return analysis_text
 
-    except Exception as error:
-        raise RuntimeError(
-            "Failed to generate analysis.md."
-        ) from error
+    # except Exception as error:
+    #     raise RuntimeError(
+    #         "Failed to generate analysis.md."
+    #     ) from error
+    except Exception:
+
+        traceback.print_exc()
+
+        raise
 
 
 def save_analysis(business_name, analysis_text):
@@ -93,10 +99,15 @@ def generate_strategy(business_name):
 
         return strategy_json
 
-    except Exception as error:
-        raise RuntimeError(
-            "Failed to generate strategy.json."
-        ) from error
+    # except Exception as error:
+    #     raise RuntimeError(
+    #         "Failed to generate strategy.json."
+    #     ) from error
+    except Exception:
+
+        traceback.print_exc()
+
+        raise
     
 
 def save_strategy(business_name, strategy_json):

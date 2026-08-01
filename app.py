@@ -20,6 +20,7 @@ uploaded_file = st.file_uploader(
 )
 
 
+
 if uploaded_file is not None:
 
     source_path = Path("source_files") / uploaded_file.name
@@ -30,13 +31,26 @@ if uploaded_file is not None:
         file.write(uploaded_file.getbuffer())
 
     st.info(f"Selected File : {uploaded_file.name}")
-    st.divider()
 
+    
+
+    st.subheader("Content Generation Mode")
+
+    generation_mode = st.radio(
+        "Choose Content Generation Mode",
+        ["Free", "Premium"],
+        horizontal=True,
+        ).lower()
+
+    
     if st.button("RUN PIPELINE"):
 
         with st.spinner("Running BusinessIntelAI Pipeline..."):
 
-            run_pipeline(source_path)
+            run_pipeline(
+        source_file_path=source_path,
+        generation_mode=generation_mode,
+        )
             
 
         st.success("Pipeline executed successfully!")

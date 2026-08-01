@@ -224,9 +224,98 @@ def generate_image(
         "Failed to generate an image."
     )
 
-def generate_voiceover(
-    script,
+import fal_client
+import requests
+
+
+def generate_wan_video(
+
+    prompt,
     output_path,
+    duration,
+    resolution,
+    aspect_ratio,
+
+):
+    """
+    Generates an audio-less mp4 video
+    using Wan 2.5.
+    """
+
+    try:
+
+        result = fal_client.subscribe(
+
+            "fal-ai/wan/v2.5/t2v",
+
+            arguments={
+
+                "prompt": prompt,
+                "duration": duration,
+                "resolution": resolution,
+                "aspect_ratio": aspect_ratio,
+
+            },
+
+        )
+
+        # ----------------------------
+        # Extract Video URL
+        # ----------------------------
+
+        video_url = (
+
+            result["video"]["url"]
+
+        )
+
+        # ----------------------------
+        # Download Video
+        # ----------------------------
+
+        response = requests.get(
+
+            video_url,
+
+        )
+
+        response.raise_for_status()
+
+        output_path.parent.mkdir(
+
+            parents=True,
+            exist_ok=True,
+
+        )
+
+        with open(
+
+            output_path,
+            "wb",
+
+        ) as file:
+
+            file.write(
+
+                response.content,
+
+            )
+
+        return output_path
+
+    except Exception as error:
+
+        raise RuntimeError(
+
+            f"Failed to generate the Wan video.\n\n{error}"
+
+        ) from error
+    
+def generate_voiceover(
+
+    video_data,
+    video_path,
+
 ):
     """
     Generates a voiceover using Piper.
@@ -238,22 +327,28 @@ def generate_voiceover(
             VOICE_MODEL,
         )
 
+        voiceover_path = (
+
+            video_path.parent
+            / "voiceover.wav"
+
+        )
+
         with wave.open(
 
-            str(output_path),
+            str(voiceover_path),
             "wb",
 
         ) as audio_file:
 
             voice.synthesize_wav(
 
-                script,
+                video_data["voiceover_script"],
                 audio_file,
 
             )
 
-        return output_path
-
+        return voiceover_path
 
     except Exception as error:
 

@@ -12,7 +12,10 @@ from agents.reviewer.reviewer import (
 
 
 
-def run_pipeline(source_file_path):
+def run_pipeline(
+    source_file_path,
+    generation_mode="free",
+):
     """
     Runs the complete BusinessIntelAI
     pipeline.
@@ -37,9 +40,10 @@ def run_pipeline(source_file_path):
 
     run_creator_pipeline(
 
-        business_name,
+    business_name=business_name,
+    generation_mode=generation_mode,
 
-    )
+   )
 
 
     print(

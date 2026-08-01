@@ -3,6 +3,10 @@ import json
 
 from utils.llm import (
     generate_response,
+    generate_response,
+    generate_image,
+    generate_voiceover,
+    generate_wan_video,
 )
 
 from utils.logger import (
@@ -14,20 +18,16 @@ from utils.filehandler import (
     save_json,
 )
 
-from utils.llm import (
-    generate_response,
-    generate_image,
-    generate_voiceover,
-)
-
 from utils.video import (
+    add_voiceover,
     create_video,
 )
 
 from agents.creator.prompts import (
     PLAN_PROMPT,
     POST_PROMPT,
-    VIDEO_PROMPT,
+    IMAGE_VIDEO_PROMPT,
+    WAN_VIDEO_PROMPT
 )
 
 
@@ -191,21 +191,21 @@ def generate_post(
         ) from error   
     
 
-def generate_video(
+def generate_video_using_images(
     business_name,
     item,
     video_number,
-    
+
 ):
     """
-    Generates one complete video.
+    Generates one complete audio-less video.
     """
 
     try:
 
         prompt = (
 
-            VIDEO_PROMPT
+            IMAGE_VIDEO_PROMPT
             + "\n\n"
             + json.dumps(
                 item,
@@ -316,27 +316,6 @@ IMAGE VARIATION:
             )
 
         # --------------------------------
-        # Generate Voiceover
-        # --------------------------------
-
-        voiceover_path = (
-
-            video_folder
-            / "voiceover.wav"
-
-        )
-
-        generate_voiceover(
-
-            video_data[
-                "voiceover_script"
-            ],
-
-            voiceover_path,
-
-        )
-
-        # --------------------------------
         # Generate Video
         # --------------------------------
 
@@ -350,54 +329,212 @@ IMAGE VARIATION:
         create_video(
 
             image_paths=image_paths,
-
-            audio_path=voiceover_path,
-
             output_path=output_path,
 
         )
 
-        # --------------------------------
-        # Execution Trace
-        # --------------------------------
-
-        log_execution_trace(
-
-            business_name=business_name,
-
-            layer="Creator",
-
-            step=f'Generate Video {video_number}',
-
-            status="SUCCESS",
-
-            decision="Generate one complete video.",
-
-            action=(
-                "Generated the images, "
-                "voiceover and mp4 video."
-            ),
-
-            observation=(
-                f'Video {video_number} '
-                "generated successfully "
-                "with voiceover narration."
-            ),
-
-        )
-
-        return output_path
+        return output_path, video_data
 
     except Exception as error:
 
         raise RuntimeError(
 
-            f'Failed to generate Video {video_number}.'
+            f"Failed to generate Video {video_number}."
 
         ) from error
 
+def generate_video_using_wan(
+
+    business_name,
+    item,
+    video_number,
+    duration=10,
+    resolution="480p",
+    aspect_ratio="9:16",
+
+):
+    """
+    Generates one complete audio-less video
+    using Wan 2.5.
+    """
+
+    try:
+
+        prompt = (
+
+            WAN_VIDEO_PROMPT
+
+            .replace(
+
+            "DURATION",
+
+            str(duration),
+
+            )
+
+            + "\n\n"
+
+        + json.dumps(
+
+            item,
+         indent=4,
+
+        )
+
+        )
+
+        video_json = generate_response(
+
+            prompt,
+
+        )
+
+        video_data = json.loads(
+
+            video_json,
+
+        )
+
+        # --------------------------------
+        # Create Video Folder
+        # --------------------------------
+
+        video_folder = (
+
+            Path("data")
+            / business_name
+            / "content"
+            / "videos"
+            / f"video_{video_number}"
+
+        )
+
+        video_folder.mkdir(
+
+            parents=True,
+            exist_ok=True,
+
+        )
+
+        # --------------------------------
+        # Generate Wan Video
+        # --------------------------------
+
+        output_path = (
+
+            video_folder
+            / f"video_{video_number}.mp4"
+
+        )
+
+        generate_wan_video(
+
+            video_data["wan_video_prompt"],
+            output_path,
+            duration,
+            resolution,
+            aspect_ratio,
+
+        )
+
+        return output_path, video_data
+
+    except Exception as error:
+
+        raise RuntimeError(
+
+            f"Failed to generate Video {video_number}."
+
+        ) from error
+
+def generate_video(
+
+    business_name,
+    item,
+    video_number,
+    generation_mode="free",
+    duration=10,
+    resolution="480p",
+    aspect_ratio="9:16",
+
+):
+
+    if generation_mode == "premium":
+
+        video_path, video_data = generate_video_using_wan(
+
+            business_name,
+            item,
+            video_number,
+            duration,
+            resolution,
+            aspect_ratio,
+
+        )
+
+    else:
+
+        video_path,video_data = generate_video_using_images(
+
+            business_name,
+            item,
+            video_number,
+
+        )
+
+
+    voiceover_path = generate_voiceover(
+
+    video_data,
+    video_path,
+
+)
+
+
+    video_path = add_voiceover(
+
+        video_path,
+        voiceover_path,
+
+    )
+
+
+    log_execution_trace(
+
+        business_name=business_name,
+
+        layer="Creator",
+
+        step=f"Generate Video {video_number}",
+
+        status="SUCCESS",
+
+        decision="Generate one complete video.",
+
+        action=(
+
+            "Generated the video, "
+            "voiceover and final mp4 video."
+
+        ),
+
+        observation=(
+
+            f"Video {video_number} "
+            "generated successfully "
+            "with voiceover narration."
+
+        ),
+
+    )
+
+
+    return video_path
+
+    
 def run_creator_pipeline(
     business_name,
+    generation_mode="free",
 ):
     """
     Runs the complete Creator pipeline.
@@ -421,9 +558,9 @@ def run_creator_pipeline(
         observation="plan.json generated successfully.",
     )
 
-    # ------------------------------------
-    # Save Plan
-    # ------------------------------------
+    # # ------------------------------------
+    # # Save Plan
+    # # ------------------------------------
 
     save_plan(
         business_name,
@@ -471,10 +608,6 @@ def run_creator_pipeline(
     # Video Generation
     # ------------------------------------
 
-    # ------------------------------------
-    # Generate Videos
-    # ------------------------------------
-    
     video_number = 1
 
     for item in plan:
@@ -482,12 +615,16 @@ def run_creator_pipeline(
         if item["type"] == "Video":
         
             generate_video(
-            
-                business_name,
-                item,
-                video_number,
-    
-            )
+
+                business_name=business_name,
+                item=item,
+                video_number=video_number,
+                generation_mode=generation_mode,
+                duration=10,
+                resolution="480p",
+                aspect_ratio="9:16",
+
+)
             video_number += 1
     
     

@@ -115,7 +115,7 @@ INPUT:
 """
 
 
-VIDEO_PROMPT = """
+IMAGE_VIDEO_PROMPT = """
 ROLE:
 
 You are an expert Social Media Video Creator.
@@ -202,18 +202,6 @@ Return ONLY valid JSON.
 
 
 {
-
-    "caption":"",
-
-    "hashtags":[
-
-        "#.....",
-        "#....."
-
-    ],
-
-    "cta":"",
-
     "image_prompt":"",
 
     "image_variations":[
@@ -226,11 +214,12 @@ Return ONLY valid JSON.
 
     ],
 
+    "video_duration":"",
+
     "voiceover_script":"",
 
     "audio_direction":"",
 
-    "video_duration":""
 
 }
 
@@ -249,3 +238,140 @@ INPUT:
 
 """
 
+WAN_VIDEO_PROMPT = """
+ROLE:
+
+You are an expert Social Media Video Creator.
+
+
+TASK:
+
+Generate ONE complete short-form cinematic
+video creative using the provided content plan
+item.
+
+
+CONSTRAINTS:
+
+1. Generate content for ONLY ONE video.
+2. Generate a suitable caption.
+3. Generate suitable hashtags.
+4. Generate a suitable call-to-action.
+5. Generate ONE highly detailed Wan 2.5 video prompt.
+6. Generate ONE suitable voiceover script.
+7. Ensure that all generated outputs align with:
+    - the topic
+    - the hook
+    - the caption direction
+    - the visual direction
+    - the insight
+    - the CTA.
+8. Never generate content unrelated to the
+provided content plan item.
+
+
+IMPORTANT:
+
+The generated video will later be generated
+using Wan 2.5 Text-to-Video.
+
+The generated video specifications are:
+
+- Duration : DURATION seconds.
+
+
+Keep these specifications in mind while
+generating:
+- the video prompt.
+- the pacing of the scenes.
+- the voiceover script.
+
+
+WAN VIDEO PROMPT REQUIREMENTS:
+
+1. Generate ONE highly detailed and visually
+descriptive Wan 2.5 video prompt.
+
+2. The generated prompt should naturally
+describe:
+    - the beginning of the video.
+    - the progression of the video.
+    - the conclusion of the video.
+
+3. Clearly describe:
+    - lighting.
+    - environment.
+    - subjects.
+    - camera movements.
+    - visual aesthetics.
+    - business branding.
+    - mood and atmosphere.
+
+4. The generated video prompt should be suitable
+for premium short-form cinematic social media
+video content such as Instagram Reels.
+
+5. Prefer realistic and visually engaging scene
+descriptions.
+
+6. Avoid excessive scene changes that are
+unsuitable for the provided video duration.
+
+7. Generate ONE cohesive visual story that can
+comfortably fit within the provided duration.
+
+8. The generated prompt should read naturally as
+ONE continuous and cohesive Wan 2.5 video prompt
+and must NOT be written as multiple independent
+scenes or image descriptions.
+
+
+VOICEOVER REQUIREMENTS:
+
+1. Generate ONE suitable voiceover script.
+
+2. Ensure that the generated voiceover naturally
+complements the generated video prompt.
+
+3. Ensure that the generated voiceover can be
+comfortably narrated within the provided video
+duration.
+
+4. Ensure that the generated voiceover naturally
+complements the pacing and progression of the
+generated video.
+
+5. Prefer warm, engaging and natural sounding
+narration unless otherwise required.
+
+6. The generated voiceover should naturally
+complement the beginning, progression and
+conclusion of the generated video.
+
+
+OUTPUT FORMAT:
+
+Return ONLY valid JSON.
+
+
+{
+    "wan_video_prompt":"",
+
+    "voiceover_script":""
+
+    "audio_direction":"",
+
+}
+
+
+IMPORTANT:
+
+1. Return ONLY valid JSON.
+2. Never wrap the JSON inside ```json.
+3. Do NOT return Markdown.
+4. Generate content for ONLY ONE VIDEO.
+5. Every field must always be present.
+
+
+INPUT:
+"""
