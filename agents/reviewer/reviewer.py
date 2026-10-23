@@ -2,6 +2,8 @@ from pathlib import Path
 
 import json
 
+from utils.logger import log_execution_trace
+
 from .prompts import (
     REVIEW_PROMPT,
 )
@@ -83,6 +85,7 @@ def review_posts(
 
 def review_videos(
     business_name,
+    generation_mode="free",
 ):
     """
     Reviews all generated videos.
@@ -162,7 +165,13 @@ def review_videos(
         )
 
 
-        if image_count != 5:
+        # Premium (Wan) videos are generated
+        # directly and have no source images.
+
+        if (
+            generation_mode != "premium"
+            and image_count != 5
+        ):
 
             issues.append(
 
@@ -240,7 +249,9 @@ def create_review_prompt(
 
     business_name,
 
-    analysis,
+    business_analysis,
+
+    market_analysis,
 
     strategy,
 
@@ -264,10 +275,16 @@ BUSINESS NAME
 {business_name}
 
 
-ANALYSIS
---------
+BUSINESS ANALYSIS
+-----------------
 
-{analysis}
+{business_analysis}
+
+
+MARKET ANALYSIS
+---------------
+
+{market_analysis}
 
 
 STRATEGY
@@ -351,6 +368,7 @@ def save_review(
 
 def review_content(
     business_name,
+    generation_mode="free",
 ):
     """
     Main Reviewer pipeline.
@@ -358,12 +376,23 @@ def review_content(
 
     issues = []
 
-    analysis = read_md(
+    business_analysis = read_md(
 
         Path("data")
         / business_name
         / "analysis"
-        / "analysis.md"
+        /"business_analysis"
+        / "business_analysis.md"
+
+    )
+
+    market_analysis = read_md(
+
+    Path("data")
+        / business_name
+        / "analysis"
+        / "market_analysis"
+        / "market_analysis.md"
 
     )
 
@@ -392,6 +421,7 @@ def review_content(
 
     video_issues = review_videos(
         business_name,
+        generation_mode,
     )
 
 
@@ -413,7 +443,9 @@ def review_content(
 
         business_name,
 
-        analysis,
+        business_analysis,
+
+        market_analysis,
 
         strategy,
 
@@ -430,6 +462,15 @@ def review_content(
 
     )
 
+    log_execution_trace(
+        business_name=business_name,
+        layer="Reviewer",
+        step="Review Content",
+        status="SUCCESS",
+        decision="Review generated content.",
+        action="Called Gemini API.",
+        observation="review.json generated successfully.",
+        )
 
     review = json.loads(
 
@@ -461,5 +502,14 @@ def review_content(
 
     )
 
+    log_execution_trace(
+        business_name=business_name,
+        layer="Reviewer",
+        step="Save Review",
+        status="SUCCESS",
+        decision="Save review output.",
+        action="Saved review.json.",
+        observation="review.json saved successfully.",
+        )
 
     return review

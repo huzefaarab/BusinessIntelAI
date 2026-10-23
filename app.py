@@ -44,44 +44,76 @@ if uploaded_file is not None:
 
     
     if st.button("RUN PIPELINE"):
+        
 
         with st.spinner("Running BusinessIntelAI Pipeline..."):
 
-            run_pipeline(
-        source_file_path=source_path,
-        generation_mode=generation_mode,
-        )
-            
+            st.session_state["business_name"] = run_pipeline(
+                source_file_path=source_path,
+                generation_mode=generation_mode,
+            )
+
+        st.session_state["source_file_name"] = uploaded_file.name
 
         st.success("Pipeline executed successfully!")
+
+
+    # Results are rendered outside the button block so they
+    # survive the rerun triggered by clicking a download button.
+
+    if st.session_state.get("source_file_name") == uploaded_file.name:
+
+        base_path = Path("data") / st.session_state["business_name"]
 
         st.divider()
 
         st.subheader("Business Analysis")
 
-        analysis_path = Path("data") / uploaded_file.name.removesuffix(".md") / "analysis" / "analysis.md"
+        business_analysis_path = base_path / "analysis" /"business_analysis"/ "business_analysis.md"
 
-        if analysis_path.exists():
+        if business_analysis_path.exists():
 
-            with open(analysis_path, "rb") as file:
+            with open(business_analysis_path, "rb") as file:
 
                 st.download_button(
-                label="Download analysis.md",
+                label="Download business_analysis.md",
                 data=file,
-                file_name="analysis.md",
+                file_name="business_analysis.md",
             )
 
         else:
 
             st.warning(
-            "analysis.md was not generated."
+            "business_analysis.md was not generated."
+            )
+
+        st.divider()
+
+        st.subheader("Market Analysis")
+
+        market_analysis_path = base_path / "analysis" /"market_analysis"/ "market_analysis.md"
+
+        if market_analysis_path.exists():
+
+            with open(market_analysis_path, "rb") as file:
+
+                st.download_button(
+                label="Download market_analysis.md",
+                data=file,
+                file_name="market_analysis.md",
+            )
+
+        else:
+
+            st.warning(
+            "market_analysis.md was not generated."
             )
 
         st.divider()
 
         st.subheader("Content Strategy")
 
-        strategy_path = Path("data") / uploaded_file.name.removesuffix(".md") / "strategy" / "strategy.json"
+        strategy_path = base_path / "strategy" / "strategy.json"
 
         if strategy_path.exists():
 
@@ -103,7 +135,7 @@ if uploaded_file is not None:
 
         st.subheader("7-Day Content Plan")
 
-        plan_path = Path("data") / uploaded_file.name.removesuffix(".md") / "plan" / "plan.json"
+        plan_path = base_path / "plan" / "plan.json"
 
         if plan_path.exists():
 
@@ -125,7 +157,7 @@ if uploaded_file is not None:
 
         st.subheader("Generated Posts")
 
-        posts_path = Path("data") / uploaded_file.name.removesuffix(".md") / "content" / "posts"
+        posts_path = base_path / "content" / "posts"
 
         if posts_path.exists():
 
@@ -151,7 +183,7 @@ if uploaded_file is not None:
 
         st.subheader("Generated Videos")
 
-        videos_path = Path("data") / uploaded_file.name.removesuffix(".md") / "content" / "videos"
+        videos_path = base_path / "content" / "videos"
 
         if videos_path.exists():
 
@@ -182,7 +214,7 @@ if uploaded_file is not None:
 
         st.subheader("Reviewer Output")
 
-        review_path = Path("data") / uploaded_file.name.removesuffix(".md") / "reviews" / "review.json"
+        review_path = base_path / "reviews" / "review.json"
 
         if review_path.exists():
 

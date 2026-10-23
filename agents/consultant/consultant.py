@@ -16,8 +16,12 @@ from utils.filehandler import (
 )
 
 from agents.consultant.prompts import (
-    ANALYSIS_PROMPT,
+    BUSINESS_ANALYSIS_PROMPT,
     STRATEGY_PROMPT,
+)
+
+from agents.consultant.market_analytics import (
+    run_market_analysis_pipeline,
 )
 
 def load_source_pack(source_file_path):
@@ -33,12 +37,12 @@ def load_source_pack(source_file_path):
         ) from error
 
 
-def generate_analysis(source_pack):
+def generate_business_analysis(source_pack):
     """
-    Generates analysis.md using Gemini.
+    Generates business_analysis.md using Gemini.
     """
     try:
-        prompt = ANALYSIS_PROMPT + "\n\n" + source_pack
+        prompt = BUSINESS_ANALYSIS_PROMPT + "\n\n" + source_pack
 
         analysis_text = generate_response(prompt)
 
@@ -55,20 +59,21 @@ def generate_analysis(source_pack):
         raise
 
 
-def save_analysis(business_name, analysis_text):
+def save_business_analysis(business_name, business_analysis_text):
     """
-    Saves analysis.md.
+    Saves business_analysis.md.
     """
     try:
         analysis_path = (
             Path("data")
             / business_name
             / "analysis"
-            / "analysis.md"
+            / "business_analysis"
+            / "business_analysis.md"
         )
 
         save_md(
-            analysis_text,
+            business_analysis_text,
             analysis_path,
         )
 
@@ -78,37 +83,60 @@ def save_analysis(business_name, analysis_text):
         ) from error
     
 
-def generate_strategy(business_name):
+def generate_strategy(
+    business_name,
+):
     """
-    Generates strategy.json using analysis.md.
+    Generates strategy.json using
+    business_analysis.md and
+    market_analysis.md.
     """
 
     try:
-        analysis_path = (
+
+        business_analysis_path = (
             Path("data")
             / business_name
             / "analysis"
-            / "analysis.md"
+            / "business_analysis"
+            / "business_analysis.md"
         )
 
-        analysis_text = read_md(analysis_path)
+        market_analysis_path = (
+            Path("data")
+            / business_name
+            / "analysis"
+            / "market_analysis"
+            / "market_analysis.md"
+        )
 
-        prompt = STRATEGY_PROMPT + "\n\n" + analysis_text
+        business_analysis = read_md(
+            business_analysis_path,
+        )
 
-        strategy_json = generate_response(prompt)
+        market_analysis = read_md(
+            market_analysis_path,
+        )
+
+        prompt = (
+            STRATEGY_PROMPT
+            + "\n\nBUSINESS ANALYSIS:\n\n"
+            + business_analysis
+            + "\n\nMARKET ANALYSIS:\n\n"
+            + market_analysis
+        )
+
+        strategy_json = generate_response(
+            prompt,
+        )
 
         return strategy_json
 
-    # except Exception as error:
-    #     raise RuntimeError(
-    #         "Failed to generate strategy.json."
-    #     ) from error
     except Exception:
 
         traceback.print_exc()
 
         raise
-    
 
 def save_strategy(business_name, strategy_json):
     """
@@ -169,10 +197,10 @@ def run_consultant_pipeline(source_file_path):
     )
 
     # ------------------------------------
-    # Generate Analysis
+    # Generate Business Analysis
     # ------------------------------------
 
-    analysis_text = generate_analysis(source_pack)
+    business_analysis_text = generate_business_analysis(source_pack)
 
     log_execution_trace(
         business_name=business_name,
@@ -181,28 +209,37 @@ def run_consultant_pipeline(source_file_path):
         status="SUCCESS",
         decision="Generate business analysis.",
         action="Called Gemini API.",
-        observation="analysis.md generated successfully.",
+        observation="business_analysis.md generated successfully.",
     )
 
     # ------------------------------------
-    # Save Analysis
+    # Save Business Analysis
     # ------------------------------------
 
-    save_analysis(
+    save_business_analysis(
         business_name,
-        analysis_text,
+        business_analysis_text,
     )
 
     log_execution_trace(
         business_name=business_name,
         layer="Consultant",
-        step="Save Analysis",
+        step="Save Business Analysis",
         status="SUCCESS",
         decision="Save analysis output.",
-        action="Saved analysis.md.",
-        observation="analysis.md saved successfully.",
+        action="Saved business_analysis.md.",
+        observation="business_analysis.md saved successfully.",
     )
 
+    # ------------------------------------
+    # Market Analysis
+    # ------------------------------------
+
+    run_market_analysis_pipeline(
+        business_name,
+    )       
+
+    
     # ------------------------------------
     # Generate Strategy
     # ------------------------------------

@@ -1,3 +1,26 @@
+import os
+import time
+import requests
+
+from urllib.parse import quote
+
+from dotenv import load_dotenv
+from google import genai
+
+
+import fal_client
+
+import wave
+
+from piper import (
+    PiperVoice,
+)
+
+from utils.logger import (log_spend)
+
+load_dotenv()
+
+
 """
 Models available in the Gemini API:
 models/gemini-2.5-flash
@@ -63,22 +86,6 @@ models/gemini-3.5-flash
 Pollination Ai
 -> Image generation.
 """
-import os
-import time
-import requests
-
-from urllib.parse import quote
-
-from dotenv import load_dotenv
-from google import genai
-
-import wave
-
-from piper import (
-    PiperVoice,
-)
-
-load_dotenv()
 
 
 TEXT_MODEL = "models/gemini-3.5-flash"
@@ -224,12 +231,9 @@ def generate_image(
         "Failed to generate an image."
     )
 
-import fal_client
-import requests
-
 
 def generate_wan_video(
-
+    business_name,
     prompt,
     output_path,
     duration,
@@ -241,6 +245,9 @@ def generate_wan_video(
     Generates an audio-less mp4 video
     using Wan 2.5.
     """
+
+    PRICE_PER_SECOND_USD = 0.05
+    USD_TO_INR = 95.39
 
     try:
 
@@ -300,7 +307,23 @@ def generate_wan_video(
                 response.content,
 
             )
+        estimated_cost_inr = round(
+        duration
+            * PRICE_PER_SECOND_USD
+            * USD_TO_INR,
+                2,
+            )
 
+        log_spend(
+            business_name=business_name,
+            layer="Creator : Video Generation",
+            model="fal-ai/wan/v2.5/t2v",
+            input_tokens=0,
+            output_tokens=0,
+            total_tokens=0,
+            cost_inr=estimated_cost_inr,
+        )
+        
         return output_path
 
     except Exception as error:

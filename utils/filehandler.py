@@ -56,6 +56,8 @@ def create_business_folders(business_name):
     folders = [
         "source_pack",
         "analysis",
+        "analysis/market_analysis",
+        "analysis/business_analysis",
         "strategy",
         "plan",
         "content",

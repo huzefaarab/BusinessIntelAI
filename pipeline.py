@@ -1,3 +1,5 @@
+import sys
+
 from agents.consultant.consultant import (
     run_consultant_pipeline,
 )
@@ -53,6 +55,7 @@ def run_pipeline(
     review_content(
 
         business_name,
+        generation_mode,
 
     )
 
@@ -63,7 +66,22 @@ def run_pipeline(
 
     )
 
+    return business_name
+
 
 if __name__ == "__main__":
 
-    run_pipeline()
+    if len(sys.argv) < 2:
+
+        sys.exit(
+            "Usage: python pipeline.py <source_file.md> [free|premium]"
+        )
+
+    run_pipeline(
+        source_file_path=sys.argv[1],
+        generation_mode=(
+            sys.argv[2].lower()
+            if len(sys.argv) > 2
+            else "free"
+        ),
+    )

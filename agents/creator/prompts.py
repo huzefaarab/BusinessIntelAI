@@ -14,7 +14,7 @@ CONSTRAINTS:
 6. Every content item must align with the week's content pillars.
 7. Every content item must align with the business tone and key marketing messages.
 8. Include suitable calls-to-action.
-9. Clearly specify the content type for every day.
+9. Clearly specify the content type for every day. The "type" field must be exactly "Post" or "Video".
 10. Ensure all strategic choices are specific to the business.
 11. Do not hallucinate information. Make reasonable assumptions whenever necessary and clearly state them.
 
@@ -26,7 +26,7 @@ Return ONLY valid JSON in the following format.
 [
     {
         "day":1,
-        "type":"",
+        "type":"Post | Video",
         "topic":"",
         "hook":"",
         "caption_direction":"",
@@ -133,8 +133,8 @@ CONSTRAINTS:
 2. Generate a suitable caption.
 3. Generate suitable hashtags.
 4. Generate a suitable call-to-action.
-5. Generate ONE detailed base image generation prompt.
-6. Generate FIVE image variations that collectively tell ONE progressing visual story.
+5. Generate EXACTLY FIVE complete image generation prompts.
+6. Each image prompt must describe ONE scene of the video.
 7. Generate a suitable voiceover script.
 8. Generate suitable audio directions.
 9. Suggest the appropriate video duration.
@@ -159,19 +159,32 @@ The generated video will later use:
 
 IMAGE REQUIREMENTS:
 
-1. The five generated images must tell ONE progressing visual story.
-2. The images must NOT feel independent.
-3. Every image should naturally transition into the next image.
-4. Maintain visual consistency across:
-    - lighting
-    - visual aesthetics
-    - environment
-    - business branding
-    - color palette.
-5. The fifth image should naturally conclude the visual story.
-6. The five generated images should feel like five consecutive scenes from the same premium cinematic short-form video.
-7. The generated base image prompt and image variations should collectively ensure visual continuity across all five images.
+1. Generate EXACTLY FIVE complete standalone image prompts.
+2. Each prompt must describe ONE different scene of the story.
+3. Together, the five prompts must tell ONE continuous visual story from beginning to end.
+4. Every prompt must already include:
+    - the visual style
+    - the lighting
+    - the environment
+    - the camera style
+    - the color palette
+    - the business branding
+5. Every prompt must be fully self-contained.
+6. Do NOT generate one base prompt with variations.
+7. Maintain visual consistency across all five prompts while ensuring each scene is visually different.
+8. The fifth prompt should naturally conclude the story.
+9. The five prompts should feel like five consecutive cinematic scenes from the same premium short-form video.
+10. Every image prompt must introduce a significant visual change from the previous one.
 
+Examples of progression include:
+- different actions
+- different moments in time
+- different camera compositions
+- different viewpoints
+- different interactions
+- different environments within the same business
+
+Do NOT generate five prompts that only show the same subject with minor appearance changes.
 
 VOICEOVER REQUIREMENTS:
 
@@ -202,9 +215,7 @@ Return ONLY valid JSON.
 
 
 {
-    "image_prompt":"",
-
-    "image_variations":[
+    "image_prompts":[
 
         "",
         "",
@@ -220,6 +231,11 @@ Return ONLY valid JSON.
 
     "audio_direction":"",
 
+    "caption":"",
+
+    "hashtags":"",
+
+    "cta":""
 
 }
 
@@ -231,7 +247,8 @@ IMPORTANT:
 3. Do NOT return Markdown.
 4. Generate content for ONLY ONE VIDEO.
 5. Every field must always be present.
-6. Generate EXACTLY FIVE image variations.
+6. Generate EXACTLY FIVE complete image prompts.
+7. Every image prompt must be self-contained and ready to be sent directly to an image generation model without any additional text.
 
 
 INPUT:

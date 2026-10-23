@@ -1,6 +1,8 @@
 from pathlib import Path
 import json
 
+from numpy import rint
+
 from utils.llm import (
     generate_response,
     generate_response,
@@ -258,51 +260,8 @@ def generate_video_using_images(
 
             )
 
-            pollinations_prompt = f"""
-
-IMPORTANT:
-
-This is Image {image_number} of 5.
-
-This image is NOT independent.
-
-It will later be combined with four other
-visually consistent images to generate ONE
-short-form cinematic video.
-
-The generated video will use:
-- zoom effects
-- smooth transitions
-- voiceover narration
-- short-form cinematic storytelling.
-
-Maintain:
-- identical lighting.
-- identical visual aesthetics.
-- identical business branding.
-- identical color palette.
-- visual continuity across all five images.
-
-This image must naturally progress the visual
-story while remaining visually consistent with
-the other generated images.
-
-The final output should feel like five
-consecutive scenes from the same premium
-cinematic short-form video.
-
-
-BASE IMAGE PROMPT:
-
-{video_data["image_prompt"]}
-
-
-IMAGE VARIATION:
-
-{video_data["image_variations"][image_number - 1]}
-
-
-"""
+            pollinations_prompt = video_data["image_prompts"][image_number - 1]
+        
 
             generate_image(
 
@@ -428,12 +387,12 @@ def generate_video_using_wan(
         )
 
         generate_wan_video(
-
-            video_data["wan_video_prompt"],
-            output_path,
-            duration,
-            resolution,
-            aspect_ratio,
+            business_name=business_name,
+            prompt=video_data["wan_video_prompt"],
+            output_path=output_path,
+            duration=duration,
+            resolution=resolution,
+            aspect_ratio=aspect_ratio,
 
         )
 
@@ -595,7 +554,7 @@ def run_creator_pipeline(
     post_number = 1
     for item in plan:
 
-        if item["type"] == "Post":
+        if item["type"].strip().lower() == "post":
 
             generate_post(
                 business_name,
@@ -612,7 +571,7 @@ def run_creator_pipeline(
 
     for item in plan:
     
-        if item["type"] == "Video":
+        if item["type"].strip().lower() == "video":
         
             generate_video(
 
